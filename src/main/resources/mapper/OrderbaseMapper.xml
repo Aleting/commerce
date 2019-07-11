@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qut.dao.OrderbaseMapper">
+  <resultMap id="BaseResultMap" type="com.qut.po.Orderbase">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="busertable_id" jdbcType="INTEGER" property="busertableId" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="orderdate" jdbcType="TIMESTAMP" property="orderdate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, busertable_id, amount, status, orderdate
+  </sql>
+  <select id="selectByExample" parameterType="com.qut.po.OrderbaseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orderbasetable
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orderbasetable
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from orderbasetable
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qut.po.OrderbaseExample">
+    delete from orderbasetable
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qut.po.Orderbase">
+    insert into orderbasetable (id, busertable_id, amount, 
+      status, orderdate)
+    values (#{id,jdbcType=INTEGER}, #{busertableId,jdbcType=INTEGER}, #{amount,jdbcType=DOUBLE}, 
+      #{status,jdbcType=TINYINT}, #{orderdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qut.po.Orderbase">
+    insert into orderbasetable
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="busertableId != null">
+        busertable_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="orderdate != null">
+        orderdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="busertableId != null">
+        #{busertableId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="orderdate != null">
+        #{orderdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qut.po.OrderbaseExample" resultType="java.lang.Long">
+    select count(*) from orderbasetable
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update orderbasetable
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.busertableId != null">
+        busertable_id = #{record.busertableId,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.orderdate != null">
+        orderdate = #{record.orderdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update orderbasetable
+    set id = #{record.id,jdbcType=INTEGER},
+      busertable_id = #{record.busertableId,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=DOUBLE},
+      status = #{record.status,jdbcType=TINYINT},
+      orderdate = #{record.orderdate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qut.po.Orderbase">
+    update orderbasetable
+    <set>
+      <if test="busertableId != null">
+        busertable_id = #{busertableId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="orderdate != null">
+        orderdate = #{orderdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qut.po.Orderbase">
+    update orderbasetable
+    set busertable_id = #{busertableId,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DOUBLE},
+      status = #{status,jdbcType=TINYINT},
+      orderdate = #{orderdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="orderInfo"  resultType="map" >
+		select ot.id, ot.amount, ot.status,  orderdate, bt.bemail, ot.busertable_id
+		from orderbasetable ot, busertable bt where ot.busertable_id=bt.id
+	</select>
+</mapper>
